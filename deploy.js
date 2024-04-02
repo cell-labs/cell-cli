@@ -1,6 +1,6 @@
 const cellConfig = require('./cell.config.js');
 const { commons, config, hd, helpers, Indexer, RPC } = require("@ckb-lumos/lumos");
-const { bytes } = require("@ckb-lumos/lumos/codec");
+const { bytes } = require("@ckb-lumos/codec");
 
 const CONFIG = config.predefined.AGGRON4;
 const PRIVATE_KEY = cellConfig.privateKey;
