@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const { program } = require('commander');
 const fs = require('fs').promises;
-const { deploy } = require('./deploy');
+const { deploy,generatePrivakey} = require('./deploy');
 
 program
   .command('deploy <path>')
@@ -15,6 +15,13 @@ program
     } catch (error) {
       console.error(`Error reading file: ${error.message}`);
     }
+  });
+
+program
+  .command('generatePrivateKey')
+  .description('Generate a private key')
+  .action(async () => {
+    await generatePrivakey();
   });
 
 program.parse(process.argv);

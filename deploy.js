@@ -37,4 +37,30 @@ async function deploy(hexData) {
   console.log(`Type ID: ${typeId}`);
 }
 
-module.exports = { deploy };
+
+async function generatePrivakey(){
+        config.initializeConfig(config.predefined.AGGRON4);
+        const { mnemonic, ExtendedPrivateKey, AddressType } = hd;
+        const thisMnemonic = mnemonic.generateMnemonic();
+        const seed = mnemonic.mnemonicToSeedSync(thisMnemonic);
+        const extendedPrivKey = ExtendedPrivateKey.fromSeed(seed);
+        const privateKey = extendedPrivKey.privateKeyInfo(
+          AddressType.Receiving,
+          0,
+        ).privateKey;
+
+       
+        const args = hd.key.privateKeyToBlake160(privateKey);
+         const template = config.predefined.AGGRON4.SCRIPTS['SECP256K1_BLAKE160'];
+        const lockScript = {
+          codeHash: template.CODE_HASH,
+          hashType: template.HASH_TYPE,
+          args: args,
+        };
+        const ckbAddress= helpers.encodeToAddress(lockScript);
+        console.log("ckbAddress: ", ckbAddress);
+        console.log("privateKey: ", privateKey);
+      
+}
+
+module.exports = { deploy,generatePrivakey};
